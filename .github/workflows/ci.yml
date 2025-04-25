@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Node.js Backend CI
 
 on:
   push:
@@ -23,11 +23,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Use Node.js 18.x
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
-    - run: npm install
-    - run: npm test
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./task-tracker-backend
+
+    - name: Run tests
+      run: npm test
+      working-directory: ./task-tracker-backend
       env:
         MONGO_URI: mongodb://localhost:27017/taskdb-test
