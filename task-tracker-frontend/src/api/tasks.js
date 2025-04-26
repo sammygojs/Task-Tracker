@@ -11,3 +11,8 @@ export async function createTask(task) {
   const response = await axios.post(API_URL, task);
   return response.data;
 }
+
+export async function deleteTask(id) {
+  const response = await axios.delete(`http://localhost:5002/tasks/${id}`);
+  return response.data;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchTasks, createTask } from '../api/tasks';
+import { fetchTasks, createTask, deleteTask } from '../api/tasks';
 import TaskForm from './TaskForm';
 
 function TaskList() {
@@ -30,6 +30,15 @@ function TaskList() {
     }
   };
 
+  const handleDeleteTask = async (id) => {
+    try {
+      await deleteTask(id);
+      loadTasks();
+    } catch (error) {
+      alert('Failed to delete task');
+    }
+  };
+
   if (loading) return <p>Loading tasks...</p>;
 
   return (
@@ -43,6 +52,12 @@ function TaskList() {
             <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
               {task.title}
             </span>
+            <button
+              onClick={() => handleDeleteTask(task._id)}
+              style={{ marginLeft: '1em', color: 'red' }}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
